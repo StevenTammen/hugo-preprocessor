@@ -1,6 +1,26 @@
 ## Why this project exists: allowing for some things I don't think my static site generator supports
 
-I build my websites with a static site generator called [Hugo](https://gohugo.io/). While it is true I am running an old build of Hugo because breaking changes broke things in the template I started out with (and I've been too busy to go debug it all -- which seems harder than it ought to be, in the manner of unhelpful error messages, although maybe I'm just dumb), it is still true that even the most up-to-date versions of Hugo lack certain features (as far as I have been able to determine), features that I view as rather essential. In no particular order:
+I build my websites with a static site generator called [Hugo](https://gohugo.io/). Even the newest versions of Hugo lack certain features (as far as I have been able to determine), features that I view as rather desriable. I have now implemented some of my wishlist, although there is still plenty more to do.
+
+Making a separate preprocessor project like this has several advantages, as I see things:
+
+- I can make things as quick-and-dirty as I like, without having to deal with the (completely reasonable) rigor that would be expected if I tried to implement things in a PR for the official hugo project. I'm doing this primarily for me (to automate a bunch of stuff in my content workflow), and this is simply the fastest way to make that happen. To be honest, I don't consider myself a hotshot dev (somewhat by choice -- I spend my time on enough other things I never will be, simply on account of my priorities), and thus don't really view a formal PR against the main hugo repo particularly realistic for me. All this to say, I very much appreciate the folks on whose shoulders I stand, but I am not one of them. I'll hack together what works for me and my circumstances, and post it publicly in the hope that it maybe helps someone else. I'll leave the impressive stuff to the folks who have the sort of impressive knowledge and time-commitment required to do it right.
+- Building on the above point, I can make things work exactly how I want, without having to worry about the use cases and opinions of others. If I were trying to get all this integrated into the main project, this would not be the case.
+- I am comfortable with Python and agree with many of its opinionated language choices, but have never used Go before. I would personally much rather maintain a large Python codebase than large Go codebase.
+
+Right now this project only operates on Markdown hugo sites. I am eying moving my sites back to Org (if I move into Emacs full-time again), and if that happens, I'll probably make an effort to support both content formats.
+
+## Things that have now been implemented
+
+### Automatically building aggregation pages
+
+There are advantages to keeping page size down. It is faster for users (smaller page sizes mean faster load times). It is generally easier to skim through a table of contents that only contains 5 things than one that contains 40. You get the idea.
+
+However, it can also be useful to be able to skim through larger pages that are aggregations of content: sometimes you might want to be able to see the wider context of how things are laid out. To do that, you'll need to be able to see information about more than one page at a time.
+
+Which content you smash together shouldn't be arbitrary, though. For the aggregation to make sense, it must help organize things for you in some semantically-useful way.
+
+Rolling up collections of pages just makes sense in terms of searching and skimming. But we shouldn't have to do anything to make it happen. It should "just work."
 
 ### Automatically building HTML slides as an alternative text view of all content
 
@@ -9,6 +29,8 @@ Completely automated construction of markdown content slides based on page conte
 ### Section-level (rather than page-level) subject-tagging of content
 
 The construction of a subject index that is much more fine-grained than individual pages; supporting categorization tags for every single header on the site (vs. only at the page level). Hugo's Taxonomies (e.g., [here](https://www.jessicahuynh.info/blog/2020/06/hugo-taxonomies/)) let you set things up per-page using variables in the YAML/TOML frontmatter, but that's pretty useless for pages of substantial size (something that would equal tens of pages in print) where you'd want to subject-tag individual sections or subsections, for much more useful content navigation.
+
+## Things that have not yet been implemented
 
 ### The ability to include some markdown content in other markdown content, no HTML or shortcodes necessary
 
@@ -28,16 +50,6 @@ Based on this, I want to define a specific API for including:
 And then set up references to automatically include exactly the content I want, and have it update seamlessly *everywhere* whenever I update it in its source location.
 
 Oh, and to make things robust, we need to elegantly handle when header names change too (make it easy to update references broken by renaming headers -- compare links breaking on the internet). It will be unavoidable, but we can make it less painful to deal with with some thought. At least I would imagine so.
-
-### Automatically building aggregation pages, without even needing explicit includes (as in the above API)
-
-There are advantages to keeping page size down. It is faster for users (smaller page sizes mean faster load times). It is generally easier to skim through a table of contents that only contains 5 things than one that contains 40. You get the idea.
-
-However, it can also be useful to be able to skim through larger pages that are aggregations of content: sometimes you might want to be able to see the wider context of how things are laid out. To do that, you'll need to be able to see information about more than one page at a time.
-
-Which content you smash together shouldn't be arbitrary, though. For the aggregation to make sense, it must help organize things for you in some semantically-useful way.
-
-Eventually I'll be more specific about these things, but for now suffice it to say that the most useful aggregations of content draw their guiding organizational principle from either topics ("reviews of backpacks" might have multiple backpack reviews, e.g.), or time ("random rambling pages from 2022").
 
 
 <!--
