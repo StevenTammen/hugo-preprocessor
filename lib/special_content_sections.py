@@ -64,6 +64,17 @@ def build_application_section(match_obj):
 
   return special_content_section
 
+@add_function('note')
+def build_note_section(match_obj):
+  section_content = match_obj.group(2)
+  opening_tag = f'<div class="special-content note">\n'
+  header = '<strong>\n' + '<a href="/about-the-site/content-organization/#general-notes">Note</a>\n' + '</strong>'
+  closing_tag = '</div>\n'
+
+  special_content_section = opening_tag + header + section_content + closing_tag
+
+  return special_content_section
+
 @add_function('indirect-reasoning')
 def build_indirect_reasoning_section(match_obj):
   section_content = match_obj.group(2)
@@ -122,6 +133,22 @@ def build_quote_section(match_obj):
   return special_content_section
 
 passage_re_pattern = re.compile('p="(.*?)"')
+
+@add_function('scripture')
+def build_scripture_section(match_obj):
+
+  parameters = match_obj.group(1)
+  section_content = match_obj.group(2)
+  
+  passage = (passage_re_pattern.search(parameters)).group(1)
+
+  opening_tag = f'<div class="special-content scripture">\n'
+  header = '<strong>' + f'{passage}' + '</strong>'
+  closing_tag = '</div>\n'
+
+  special_content_section = opening_tag + header + section_content + closing_tag
+
+  return special_content_section
 
 @add_function('scripture-h')
 def build_scripture_h_section(match_obj):

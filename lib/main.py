@@ -144,11 +144,20 @@ def strip_discussion_pages(content_section):
     )
   return content_section
 
+video_only_sections_re_pattern = re.compile(r'^{{% video-only %}}((?:.|\n)+?){{% /video-only %}}', re.MULTILINE)
+def strip_video_only_sections(content_section):
+  content_section = video_only_sections_re_pattern.sub(
+      '',
+      content_section
+    )
+  return content_section
+
 slides_template = read_in_file('templates/slides-template.html')
 def process_content_section_and_build_slides(file_path, content_section, summary):
 
-    # Strip discussion pages, html comments, and subjects sections
+    # Strip discussion pages, video-only sections, html comments, and subjects sections
     content_section = strip_discussion_pages(content_section)
+    content_section = strip_video_only_sections(content_section)
     content_section = strip_html_comments(content_section)
     content_section = strip_subjects_sections(content_section)
 

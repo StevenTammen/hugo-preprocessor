@@ -16,8 +16,9 @@ def add_appropriate_things_to_beginning_and_end_of_slides(content_section, summa
   headers = remove_duplicates_from_list_while_preserving_order(headers)
 
   outline_as_string = ''
-  # Slide links start at 3, since we will not link to the title slide nor the outline itself
-  slide_number = 3
+  # Slide links start at 4, since we will not link to the title slide, the summary slide,
+  # nor the outline itself
+  slide_number = 4
 
   # The first header is the title slide, so we skip it
   for header in headers[1:]:
@@ -30,7 +31,7 @@ def add_appropriate_things_to_beginning_and_end_of_slides(content_section, summa
     # Add indentation if the header is h4 or h5.
     # Four spaces for h5
     if('#####' in header):
-      outline_item = '    ' + outline_item
+      outline_item = '     ' + outline_item
     # And two spaces for h4
     elif('####' in header):
       outline_item = '  ' + outline_item

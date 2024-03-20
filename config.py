@@ -19,7 +19,7 @@ example = Project(
 
 bibledocs = Project(
   "BibleDocs.org",
-  "C:/Users/steve/Dropbox/projects/bibledocs.org/",
+  "C:/R/bibledocs.org/",
   {
     'shorter-topical-studies' : 'Shorter Topical',
 
